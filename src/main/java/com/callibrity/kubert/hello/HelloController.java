@@ -11,8 +11,14 @@ public class HelloController {
     @Value("${message.pattern:Hello, %s!}")
     private String greetingPattern;
 
+    @Value("${HOSTNAME:NO_HOST_NAME_FOUND}")
+    private String hostName;
+
     @GetMapping("/hello/{name}")
     public HelloResponse sayHello(@PathVariable("name") String name) {
-        return new HelloResponse(String.format(greetingPattern, name));
+        return HelloResponse.builder()
+                .greeting(String.format(greetingPattern, name))
+                .hostName(hostName)
+                .build();
     }
 }
